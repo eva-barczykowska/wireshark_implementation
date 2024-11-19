@@ -1,4 +1,6 @@
 # endpoint for the button to launch Wireshark
+# this code just calls the subprocess.run function to launch Wireshark.
+# (no specific profile name)
 
 # from fastapi import FastAPI
 #
@@ -21,10 +23,10 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-@app.api_route("/launch-wireshark", methods=["GET", "POST"])
+@app.api_route("/launch-wireshark", methods=["POST"])
 async def launch_wireshark():
     import subprocess
-    profile_name = "Wireshark Masterclass"  # Use your exact profile name here
+    profile_name = "Wireshark Masterclass"  # Use the exact profile name you want to use
     try:
         subprocess.run(["wireshark", "-C", profile_name], check=True)
         return {"message": f"Wireshark launched successfully with profile '{profile_name}'!"}
@@ -34,4 +36,3 @@ async def launch_wireshark():
         return {"error": f"Wireshark failed to launch: {e}"}
     except Exception as e:
         return {"error": f"An unexpected error occurred: {e}"}
-
